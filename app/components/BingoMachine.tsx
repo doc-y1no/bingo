@@ -21,13 +21,13 @@ const BingoMachine = () => {
       const parsedDrawnNumbers = JSON.parse(savedDrawnNumbers);
       setDrawnNumbers(parsedDrawnNumbers);
 
-      // 残りの番号を計算
-      const remainingNumbers = Array.from({ length: 75 }, (_, i) => i + 1)
+      // 残りの番号を計算（1-100）
+      const remainingNumbers = Array.from({ length: 100 }, (_, i) => i + 1)
         .filter(num => !parsedDrawnNumbers.includes(num));
       setNumbers(remainingNumbers);
     } else {
-      // 初期状態の設定
-      setNumbers(Array.from({ length: 75 }, (_, i) => i + 1));
+      // 初期状態の設定（1-100）
+      setNumbers(Array.from({ length: 100 }, (_, i) => i + 1));
     }
 
     if (savedCurrentNumber) {
@@ -59,16 +59,14 @@ const BingoMachine = () => {
     }, 2000);
   };
 
-  // リセット機能の追加
+  // リセット機能
   const resetGame = () => {
-    if (isSpinning) return; // 抽選中はリセットできないように
+    if (isSpinning) return;
 
-    // 状態をリセット
-    setNumbers(Array.from({ length: 75 }, (_, i) => i + 1));
+    // 1-100の番号で初期化
+    setNumbers(Array.from({ length: 100 }, (_, i) => i + 1));
     setCurrentNumber(null);
     setDrawnNumbers([]);
-
-    // ローカルストレージもクリア
     localStorage.removeItem('drawnNumbers');
     localStorage.removeItem('currentNumber');
   };
